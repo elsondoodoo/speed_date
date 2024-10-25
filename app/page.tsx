@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { SelectForm } from "@/components/ui/GenderForm";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Home() {
   return (
@@ -48,6 +50,9 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+
+        <h2 className="text-xl font-bold mt-8 mb-4">Gender Selection Form</h2>
+        <SelectForm />
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
@@ -96,6 +101,7 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+      <Toaster />
     </div>
   );
 }
