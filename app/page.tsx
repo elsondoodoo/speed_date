@@ -7,7 +7,26 @@ import { getFemaleUser } from "@/lib/getUsers";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{
+    gender: string;
+    name: {
+      first: string;
+      last: string;
+    };
+    email: string;
+    picture: {
+      large: string;
+      medium: string;
+      thumbnail: string;
+    };
+    location: {
+      city: string;
+      country: string;
+    };
+    dob: {
+      age: number;
+    };
+  } | null>(null);
 
   useEffect(() => {
     const loadInitialUser = async () => {
