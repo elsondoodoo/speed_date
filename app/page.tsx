@@ -5,6 +5,12 @@ import { SelectForm } from "@/components/ui/GenderForm";
 import { Toaster } from "@/components/ui/toaster";
 import { getFemaleUser } from "@/lib/getUsers";
 import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export default function Home() {
   const [user, setUser] = useState<{
@@ -28,6 +34,8 @@ export default function Home() {
     };
   } | null>(null);
 
+  const [showLocation, setShowLocation] = useState(false);
+
   useEffect(() => {
     const loadInitialUser = async () => {
       const initialUser = await getFemaleUser();
@@ -39,6 +47,14 @@ export default function Home() {
   const handleUserUpdate = async () => {
     const newUser = await getFemaleUser();
     setUser(newUser);
+  };
+
+  const handleSmash = () => {
+    setShowLocation(true);
+  };
+
+  const handlePass = () => {
+    handleUserUpdate();
   };
 
   if (!user) return <div>Loading...</div>;
@@ -60,13 +76,13 @@ export default function Home() {
           <p className="text-muted-foreground">{user.email}</p>
           <div className="flex gap-4 mt-2">
             <button
-              onClick={handleUserUpdate}
+              onClick={handleSmash}
               className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
             >
               Smash
             </button>
             <button
-              onClick={handleUserUpdate}
+              onClick={handlePass}
               className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
             >
               Pass
@@ -77,6 +93,16 @@ export default function Home() {
         <h2 className="text-xl font-bold mt-8 mb-4">Gender Selection Form</h2>
         <SelectForm />
       </main>
+      <Dialog open={showLocation} onOpenChange={setShowLocation}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Location Details</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p>{user.name.first} is from {user.location.city}, {user.location.country}</p>
+          </div>
+        </DialogContent>
+      </Dialog>
       <Toaster />
     </div>
   );
